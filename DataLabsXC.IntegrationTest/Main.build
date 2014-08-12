@@ -107,6 +107,7 @@
       Deleting Unit Test Results file
     </echo>
     <delete file="${UnitTestResultFilePath}" />
+    <echo message="path testfile ${projectRootPath}\${TestDefinitionFilePath}"/>
     <echo>Running Unit Test</echo>
     <echo message=" File path ${projectRootPath}\${TestDefinitionFilePath}"/>
     <mkdir dir="${path::get-directory-name(UnitTestResultFilePath)}"
