@@ -1,0 +1,15 @@
+﻿<BuildDefinition>
+  <TestDefinitionConfiguration>
+
+    <!--Run All = 32767-->
+    <!--Run Ordered Tests = 255-->
+    <!--Run Unordered Tests = 7936-->
+    <!--Run Regression Tests = 24576-->
+    <!--Run Ordered & Unordered Tests = 8191-->
+
+    <!--Ordered Tests-->
+    <Test Value="1" Name="OrderedTest1" TestContainer="DataLabsXC.IntegrationTest\OrderedTest1.orderedtest" />
+    <Test Value="2" Name="OrderedTest2" TestContainer="DataLabsXC.IntegrationTest\OrderedTest2.orderedtest" />
+
+  </TestDefinitionConfiguration>
+</BuildDefinition>
