@@ -10,7 +10,7 @@
   <property name="generateXCConfig" value="false" overwrite="false" />
 
   <!-- Bitmask enabled Integration tests related -->
-  <property name="TestDefinitionFilePath" value="DataLabsXC.IntegrationTest\TestDefinitionConfiguration.xml" overwrite="false" />
+  <property name="TestDefinitionFilePath" value="TestDefinitionConfiguration.xml" overwrite="false" />
   <property name="IntegrationTestsBitMask" value="0" overwrite="false" />
   <property name="IntegrationTestName" value="" overwrite="true" />
   <property name="IntegrationTestContainer" value="" overwrite="true" />
@@ -108,8 +108,9 @@
     </echo>
     <delete file="${UnitTestResultFilePath}" />
     <echo>Running Unit Test</echo>
+    <echo message=" File path ${projectRootPath}\${TestDefinitionFilePath}"/>
     <mkdir dir="${path::get-directory-name(UnitTestResultFilePath)}"
-			   if="${not directory::exists(path::get-directory-name(UnitTestResultFilePath))}" />
+   if="${not directory::exists(path::get-directory-name(UnitTestResultFilePath))}" />
 
     <echo message="Executing ${TestsToExecute} ..." />
     <foreach item="String" in="${TestsToExecute}" delim="," property="count">
@@ -156,7 +157,7 @@
       <!--<delete file="${UnitTestResultFilePath}" />-->
 
     </foreach>
-  </target> 
+  </target>
 
 
   <target name="Cleanup">
