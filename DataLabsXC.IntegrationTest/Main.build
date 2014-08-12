@@ -10,7 +10,7 @@
   <property name="generateXCConfig" value="false" overwrite="false" />
 
   <!-- Bitmask enabled Integration tests related -->
-  <property name="TestDefinitionFilePath" value="testdefinition\TestDefinitionConfiguration.xml" overwrite="false" />
+  <property name="TestDefinitionFilePath" value="DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\testdefinition\TestDefinitionConfiguration.xml" overwrite="false" />
   <property name="IntegrationTestsBitMask" value="0" overwrite="false" />
   <property name="IntegrationTestName" value="" overwrite="true" />
   <property name="IntegrationTestContainer" value="" overwrite="true" />
