@@ -69,13 +69,13 @@
 				project.Properties["GenerateArtifacts"] = "true";
 			}
 			
-			project.Properties["TestsToExecute"] = testsToExecute.ToString();
+		
 		}
 
 
       ]]>
     </code>
-
+    <!--project.Properties["TestsToExecute"] = testsToExecute.ToString();-->
   </script>
   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
