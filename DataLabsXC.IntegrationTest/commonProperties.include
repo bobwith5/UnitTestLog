@@ -59,7 +59,7 @@
   <property name="CDContentPath" value="${CDPath}\${OriginalBuildCounter}"/>
 
   <!-- built in properties-->
-  <property name="nant.onsuccess" value="teardown.success"/>
-  <property name="nant.onfailure" value="teardown.failure"/>
+  <!--<property name="nant.onsuccess" value="teardown.success"/>
+  <property name="nant.onfailure" value="teardown.failure"/>-->
 
 </project>
