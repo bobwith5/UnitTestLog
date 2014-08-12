@@ -15,7 +15,7 @@
   <property name="IntegrationTestName" value="" overwrite="true" />
   <property name="IntegrationTestContainer" value="" overwrite="true" />
   <property name="IntegrationTestCategory" value="" overwrite="true" />
-  <property name="TestsToExecute" value="" overwrite="false" />
+  <property name="TestsToExecute" value="OrderedTest1,OrderedTest2" overwrite="false" />
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
