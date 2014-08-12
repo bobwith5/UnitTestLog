@@ -1,0 +1,5 @@
+C:\D\UnitTestLog\DataLabsXC\bin\Debug\DataLabsXC.dll
+C:\D\UnitTestLog\DataLabsXC\bin\Debug\DataLabsXC.pdb
+C:\D\UnitTestLog\DataLabsXC\obj\Debug\DataLabsXC.csprojResolveAssemblyReference.cache
+C:\D\UnitTestLog\DataLabsXC\obj\Debug\DataLabsXC.dll
+C:\D\UnitTestLog\DataLabsXC\obj\Debug\DataLabsXC.pdb

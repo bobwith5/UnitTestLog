@@ -1,0 +1,7 @@
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.IntegrationTest.dll
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.IntegrationTest.pdb
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\obj\Debug\DataLabsXC.IntegrationTest.csprojResolveAssemblyReference.cache
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\obj\Debug\DataLabsXC.IntegrationTest.dll
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\obj\Debug\DataLabsXC.IntegrationTest.pdb
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.dll
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.pdb

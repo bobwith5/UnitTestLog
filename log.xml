@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestMethods>
+  <TestMethod ClassName="DataLabsXC.IntegrationTest.UnitTest1" Method="TestMethod1" StartTime="2014-08-11T17:32:29.3103158+05:30" EndTime="2014-08-11T17:32:29.3173165+05:30" ExecutionTime="0.0070006999999999995" />
+  <TestMethod ClassName="DataLabsXC.IntegrationTest.UnitTest1" Method="TestMethod2" StartTime="2014-08-11T17:32:29.3243172+05:30" EndTime="2014-08-11T17:32:29.3253173+05:30" ExecutionTime="0.0010000999999999999" />
+  <TestMethod ClassName="DataLabsXC.IntegrationTest.UnitTest2" Method="TestMethod1" StartTime="2014-08-11T17:32:29.3273175+05:30" EndTime="2014-08-11T17:32:29.3293177+05:30" ExecutionTime="0.0020001999999999997" />
+  <TestMethod ClassName="DataLabsXC.IntegrationTest.UnitTest2" Method="TestMethod2" StartTime="2014-08-11T17:32:29.3313179+05:30" EndTime="2014-08-11T17:32:29.332318+05:30" ExecutionTime="0.0010000999999999999" />
+</TestMethods>
