@@ -19,8 +19,6 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
-  <call target="Generate XCConfig" if="${generateXCConfig}" />
-
   <script language="C#">
 
     <references>
