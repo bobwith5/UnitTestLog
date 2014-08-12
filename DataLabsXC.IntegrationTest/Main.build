@@ -10,7 +10,7 @@
   <property name="generateXCConfig" value="false" overwrite="false" />
 
   <!-- Bitmask enabled Integration tests related -->
-  <property name="TestDefinitionFilePath" value="DataLabsXC.IntegrationTest\TestDefinitionConfiguration.xml" overwrite="false" />
+  <property name="TestDefinitionFilePath" value="C:\D\UnitTestLog\DataLabsXC.IntegrationTest\TestDefinitionConfiguration.xml" overwrite="false" />
   <property name="IntegrationTestsBitMask" value="0" overwrite="false" />
   <property name="IntegrationTestName" value="" overwrite="true" />
   <property name="IntegrationTestContainer" value="" overwrite="true" />
@@ -69,13 +69,13 @@
 				project.Properties["GenerateArtifacts"] = "true";
 			}
 			
-		
+			project.Properties["TestsToExecute"] = testsToExecute.ToString();
 		}
 
 
       ]]>
     </code>
-    <!--project.Properties["TestsToExecute"] = testsToExecute.ToString();-->
+
   </script>
   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
