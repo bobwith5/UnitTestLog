@@ -114,10 +114,10 @@
       <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="//TestDefinitionConfiguration/Test[${count}]/@Name" property="IntegrationTestName" />
       <echo message="${IntegrationTestName}" />
 
-      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@TestContainer" property="IntegrationTestContainer" />
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/DataLabsXC.IntegrationTest/TestDefinitionConfiguration/Test[${count}]/@TestContainer" property="IntegrationTestContainer" />
       <echo message="${IntegrationTestContainer}" />
 
-      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@Category" property="IntegrationTestCategory" failonerror="false" verbose="true" />
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/DataLabsXC.IntegrationTest/TestDefinitionConfiguration/Test[${count}]/@Category" property="IntegrationTestCategory" failonerror="false" verbose="true" />
       <echo message="${IntegrationTestCategory}" />
 
       <echo message="Executing ${IntegrationTestContainer} ..." />
