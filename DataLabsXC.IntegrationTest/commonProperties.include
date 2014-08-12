@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project>
+  <property name="nantdir" value="C:\Build\NAnt\bin"/>
+  <loadtasks assembly="${nantdir}\extensions\nantftp\ftptask.dll"/>
+  <loadtasks assembly="${nantdir}\extensions\nantcontrib\NAnt.Contrib.Tasks.dll"/>
+
+  <!-- team city properties -->
+
+  <property name="build.configuration" value="debug" overwrite="false"/>
+  <property name="productName" value="Qunit Test"/>
+  <!--<property name="productKey" value="469E7 - EY803 - MUJXN - 8C9PF"/>-->
+  <property name="majorVersion" value="5"/>
+  <property name="minorVersion" value="2"/>
+  <property name="revisionVersion" value="0"/>
+  <property name="projectRootPath" value="${directory::get-parent-directory(project::get-base-directory())}" dynamic="true"/>
+
+
+  <!-- update the build number -->
+  <property name="build.number" value="0" overwrite="false"/>
+  <tstamp property="build.date" pattern="yyyyMMdd" verbose="true" />
+  <property name="OriginalBuildCounter" value="${build.number}" />
+  <property name="NewBuildNumber" value="${majorVersion}.${minorVersion}.${revisionVersion}.${build.date}${build.number}" overwrite="true"/>
+
+  <property name="checkoutDir" value="" overwrite="false" />
+
+  <!-- for build machine, this must be false -->
+  <property name="DeveloperMode" value="true" overwrite="false" />
+  <property name="ProjectCodePath" value="${projectRootPath}"/>
+
+
+
+  <!-- settings to build db -->
+  <property name="DomainName" value="${environment::get-machine-name()}"/>
+  <property name="AdminGroup" value="Administrators" />
+
+  <!-- File operations related data -->
+  <property name="AssemblyReadOnly" value="false"/>
+  <property name="ReadOnly" value="false"/>
+
+  <property name="devEnvPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.com"/>
+  <property name="tfPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\tf.exe"/>
+  <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
+  <property name="msBuildExePath" value="C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"/>
+  <property name="snPath" value="C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\sn.exe"/>
+  <property name="sqlCmd" value="C:\Program Files\Microsoft SQL Server\100\Tools\Binn\sqlcmd.exe" />
+  <property name ="chutzpahConsolePath" value ="C:\TeamCity\buildAgent\tools\Chutzpah\chutzpah.console.exe" />
+  <property name="jsTests" value="${ProjectCodePath}\QUnitTestApplication\Scripts\Tests" />
+
+  <property name="CPUArchitecture" value="AnyCPU"/>
+
+  <!-- Log related -->
+  <property name="LogDbServer" value="irv-edctfs-901"/>
+  <property name="LogDb" value="BuildDb"/>
+  <property name="LogDbLogin" value="sa"/>
+  <property name="LogDbLoginPass" value="Datalabs123"/>
+
+  <!-- set the temp location for the packaging of content -->
+  <property name="CDPath" value="C:\TeamCity\buildAgent\work"/>
+  <property name="CDContentPath" value="${CDPath}\${OriginalBuildCounter}"/>
+
+  <!-- built in properties-->
+  <property name="nant.onsuccess" value="teardown.success"/>
+  <property name="nant.onfailure" value="teardown.failure"/>
+
+</project>

@@ -9,8 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLabsXC", "..\DataLabsXC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build files", "Build files", "{82D76AF4-3B8F-4917-8F3A-B2F06720BDB1}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Users\bommitc\Desktop\CommonProperties.include = ..\..\..\Users\bommitc\Desktop\CommonProperties.include
-		..\..\..\Users\bommitc\Desktop\Main.build = ..\..\..\Users\bommitc\Desktop\Main.build
+		commonProperties.include = commonProperties.include
+		Main.build = Main.build
 	EndProjectSection
 EndProject
 Global
