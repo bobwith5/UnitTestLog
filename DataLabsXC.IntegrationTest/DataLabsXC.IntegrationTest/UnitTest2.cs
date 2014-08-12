@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DataLabsXC.IntegrationTest
 {
     [TestClass]
-    public class UnitTest2:UnitTest3
+    public class UnitTest2
     {
         [TestMethod]
         public void TestMethod1()

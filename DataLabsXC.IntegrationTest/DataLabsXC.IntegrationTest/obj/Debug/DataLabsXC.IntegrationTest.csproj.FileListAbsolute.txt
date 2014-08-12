@@ -5,3 +5,5 @@ C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\obj\Debug
 C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\obj\Debug\DataLabsXC.IntegrationTest.pdb
 C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.dll
 C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\DataLabsXC.pdb
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\OrderedTest1.orderedtest
+C:\D\UnitTestLog\DataLabsXC.IntegrationTest\DataLabsXC.IntegrationTest\bin\Debug\OrderedTest2.orderedtest
