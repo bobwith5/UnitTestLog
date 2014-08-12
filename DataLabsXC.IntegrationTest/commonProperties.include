@@ -25,7 +25,7 @@
 
   <!-- for build machine, this must be false -->
   <property name="DeveloperMode" value="true" overwrite="false" />
-  <property name="ProjectCodePath" value="${projectRootPath}"/>
+  <property name="ProjectCodePath" value="${projectRootPath}\DataLabsXC.IntegrationTest"/>
 
 
 
