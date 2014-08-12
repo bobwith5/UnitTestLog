@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="orderedtest1" storage="c:\d\unittestlog\datalabsxc.integrationtest\datalabsxc.integrationtest\orderedtest1.orderedtest" id="90f4c08c-abd2-4bc0-8ff2-46e1c760537b" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="3e5dad48-7386-66e5-4498-102a71eeca3d" name="TestMethod1" storage="bin\debug\datalabsxc.integrationtest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="993c8a84-6dca-2210-2b9f-81b5e9a1fc74" name="TestMethod1" storage="bin\debug\datalabsxc.integrationtest.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

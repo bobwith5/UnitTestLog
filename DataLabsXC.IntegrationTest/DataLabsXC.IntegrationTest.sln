@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build files", "Build files"
 	ProjectSection(SolutionItems) = preProject
 		commonProperties.include = commonProperties.include
 		Main.build = Main.build
+		..\..\..\Development\irv-edctfs-901\IrvineDev\Clinical\Dev\BuildFiles\TestDefinitionConfiguration.xml = ..\..\..\Development\irv-edctfs-901\IrvineDev\Clinical\Dev\BuildFiles\TestDefinitionConfiguration.xml
 	EndProjectSection
 EndProject
 Global

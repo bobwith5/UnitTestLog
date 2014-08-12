@@ -3,6 +3,82 @@
   <include buildfile="CommonProperties.include" />
   <property name="UnitTestResultFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.trx"/>
   <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
+
+
+  <property name="UnitTestMode" value="" overwrite="false"/>
+  <property name="cacheName" value="" />
+  <property name="generateXCConfig" value="false" overwrite="false" />
+
+  <!-- Bitmask enabled Integration tests related -->
+  <property name="TestDefinitionFilePath" value="TestDefinitionConfiguration.xml" overwrite="false" />
+  <property name="IntegrationTestsBitMask" value="0" overwrite="false" />
+  <property name="IntegrationTestName" value="" overwrite="true" />
+  <property name="IntegrationTestContainer" value="" overwrite="true" />
+  <property name="IntegrationTestCategory" value="" overwrite="true" />
+  <property name="TestsToExecute" value="" overwrite="false" />
+  <property name="GenerateArtifacts" value="false" overwrite="true" />
+
+  <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
+  <call target="Generate XCConfig" if="${generateXCConfig}" />
+
+  <script language="C#">
+
+    <references>
+      <include name="System.Xml.dll" />
+    </references>
+    <code>
+      <![CDATA[
+		public static void ScriptMain(Project project)
+		{ 
+            var doc = new  System.Xml.XmlDocument();
+            doc.Load(project.Properties["projectRootPath"] + "\\" + project.Properties["TestDefinitionFilePath"]);
+
+            System.Xml.XmlNodeList testNodes = doc.SelectNodes("/TestDefinitionConfiguration/*");
+            if (testNodes == null)
+            {
+                throw new Exception("No TestDefinitionConfiguration node was found in the XML document.");
+            }
+
+			uint selections = Convert.ToUInt32(project.Properties["IntegrationTestsBitMask"]);
+            int index = 1;
+            int executeTestCount = 0;
+            bool isFirstRecord = true;
+            var testsToExecute = new StringBuilder();
+            foreach (System.Xml.XmlNode testNode in testNodes)
+            {
+                uint switchValue = Convert.ToUInt32(testNode.Attributes["Value"].InnerText);
+                if ((selections & switchValue) != 0)
+                {
+                    executeTestCount++;
+                    Console.WriteLine(testNode.Attributes["Name"].InnerText);
+                    if (isFirstRecord)
+                    {
+                        testsToExecute.Append(index);
+                    }
+                    else
+                    {
+                        testsToExecute.Append(String.Format(",{0}", index));
+                    }
+
+                    isFirstRecord = false;
+                }
+
+                index++;
+            }
+
+			if (testNodes.Count == executeTestCount)
+			{
+				project.Properties["GenerateArtifacts"] = "true";
+			}
+			
+			project.Properties["TestsToExecute"] = testsToExecute.ToString();
+		}
+
+
+      ]]>
+    </code>
+
+  </script>
   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
@@ -12,7 +88,7 @@
     </setinformationalversion>-->
     <call target="CompileAll" />
     <!--<call target="QunitTest" />-->
-    <call target="Execute Unit Tests"/>
+    <call target="Execute Integration Unit Test"/>
     <!--<call target="Cleanup" />-->
 
     <!--<call target="Copy Files" />
@@ -28,30 +104,59 @@
     </exec>
   </target>
 
-  <target name="Execute Unit Tests">
-    <fileset id="UnitTestAssemblies" basedir="${ProjectCodePath}">
-      <exclude name="**\obj\**\*" />
-      <include name="${ProjectCodePath}\**\bin\${build.configuration}\*.DataLabsXC.IntegrationTest.dll" />
-    </fileset>
-    <foreach item="File" property="filename">
-      <in>
-        <items refid="UnitTestAssemblies" />
-      </in>
-      <do>
-        <echo message="${filename}" />
-        <mkdir dir="${path::get-directory-name(UnitTestResultFilePath)}" if="${not directory::exists(path::get-directory-name(UnitTestResultFilePath))}" />
-        <delete file="${UnitTestResultFilePath}" />
-        <exec program="${msTestPath}" verbose="true">
-          <arg value="/testcontainer:${filename}" />
-          <arg value="/resultsfile:${UnitTestResultFilePath}" />
-          <arg value="/detail:errormessage" />
-          <arg value="/detail:errorstacktrace" />
-          <arg value="/detail:debugtrace" />
-          <arg value="/detail:traceinfo" />
-        </exec>
-      </do>
+  <target name="Execute Integration Unit Test">
+    <echo>
+      Deleting Unit Test Results file
+    </echo>
+    <delete file="${UnitTestResultFilePath}" />
+    <echo>Running Unit Test</echo>
+    <mkdir dir="${path::get-directory-name(UnitTestResultFilePath)}"
+			   if="${not directory::exists(path::get-directory-name(UnitTestResultFilePath))}" />
+    <foreach item="String" in="${TestsToExecute}" delim="," property="count">
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="//TestDefinitionConfiguration/Test[${count}]/@Name" property="IntegrationTestName" />
+      <echo message="${IntegrationTestName}" />
+
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@TestContainer" property="IntegrationTestContainer" />
+      <echo message="${IntegrationTestContainer}" />
+
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@Category" property="IntegrationTestCategory" failonerror="false" verbose="true" />
+      <echo message="${IntegrationTestCategory}" />
+
+      <echo message="Executing ${IntegrationTestContainer} ..." />
+
+      <choose>
+        <when test="${string::get-length(IntegrationTestCategory) > 0}">
+          <exec program="${msTestPath}">
+            <arg value="/testcontainer:${projectRootPath}\${IntegrationTestContainer}" />
+            <arg value="/testsettings:${projectRootPath}\TestSettingsx64.testsettings " />
+            <arg value="/resultsfile:${UnitTestResultFilePath}" />
+            <arg value="/category:${IntegrationTestCategory}" />
+            <arg value="/detail:errormessage" />
+            <arg value="/detail:errorstacktrace" />
+            <arg value="/detail:debugtrace" />
+            <arg value="/detail:traceinfo" />
+            <arg value="/detail:duration" />
+          </exec>
+        </when>
+        <otherwise>
+          <exec program="${msTestPath}">
+            <arg value="/testcontainer:${projectRootPath}\${IntegrationTestContainer}" />
+            <arg value="/testsettings:${projectRootPath}\TestSettingsx64.testsettings " />
+            <arg value="/resultsfile:${UnitTestResultFilePath}" />
+            <arg value="/detail:errormessage" />
+            <arg value="/detail:errorstacktrace" />
+            <arg value="/detail:debugtrace" />
+            <arg value="/detail:traceinfo" />
+            <arg value="/detail:duration" />
+          </exec>
+        </otherwise>
+
+      </choose>
+
+      <delete file="${UnitTestResultFilePath}" />
+
     </foreach>
-  </target>
+  </target> 
 
 
   <target name="Cleanup">
