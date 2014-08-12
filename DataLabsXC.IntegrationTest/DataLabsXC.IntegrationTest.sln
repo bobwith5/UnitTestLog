@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLabsXC.IntegrationTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLabsXC", "..\DataLabsXC\DataLabsXC.csproj", "{702D0F3C-E4C5-4A93-A0D5-A3A8BA414E28}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build files", "Build files", "{7965ED5A-7F7F-405D-8F7B-509FA0A45E62}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build files", "Build files", "{82D76AF4-3B8F-4917-8F3A-B2F06720BDB1}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\..\Users\bommitc\Desktop\CommonProperties.include = ..\..\..\Users\bommitc\Desktop\CommonProperties.include
 		..\..\..\Users\bommitc\Desktop\Main.build = ..\..\..\Users\bommitc\Desktop\Main.build
