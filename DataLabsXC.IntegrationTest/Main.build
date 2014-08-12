@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project name="Qunit Build" default="Main Build">
+  <include buildfile="CommonProperties.include" />
+  <property name="UnitTestResultFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.trx"/>
+  <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
+  <target name="Main Build">
+    <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
+      <fileset basedir="${projectRootPath}\">
+        <include name="**/AssemblyInfo.*"/>
+        <exclude name="**/Shared/**"/>
+      </fileset>
+    </setinformationalversion>-->
+    <call target="CompileAll" />
+    <call target="QunitTest" />
+    <call target="Execute Unit Tests"/>
+    <call target="Cleanup" />
+
+    <!--<call target="Copy Files" />
+    <call target="Zip" />-->
+  </target>
+
+  <target name="CompileAll">
+    <echo>Compile solution...</echo>
+    <exec program="${devEnvPath}">
+      <arg value="${ProjectCodePath}\DataLabsXC.IntegrationTest.sln"/>
+      <arg value="/Rebuild"/>
+      <arg value="${build.configuration}"/>
+    </exec>
+  </target>
+
+  <target name="Execute Unit Tests">
+    <fileset id="UnitTestAssemblies" basedir="${ProjectCodePath}">
+      <exclude name="**\obj\**\*" />
+      <include name="${ProjectCodePath}\**\bin\${build.configuration}\*.DataLabsXC.IntegrationTest.dll" />
+    </fileset>
+    <foreach item="File" property="filename">
+      <in>
+        <items refid="UnitTestAssemblies" />
+      </in>
+      <do>
+        <echo message="${filename}" />
+        <mkdir dir="${path::get-directory-name(UnitTestResultFilePath)}" if="${not directory::exists(path::get-directory-name(UnitTestResultFilePath))}" />
+        <delete file="${UnitTestResultFilePath}" />
+        <exec program="${msTestPath}" verbose="true">
+          <arg value="/testcontainer:${filename}" />
+          <arg value="/resultsfile:${UnitTestResultFilePath}" />
+          <arg value="/detail:errormessage" />
+          <arg value="/detail:errorstacktrace" />
+          <arg value="/detail:debugtrace" />
+          <arg value="/detail:traceinfo" />
+        </exec>
+      </do>
+    </foreach>
+  </target>
+
+
+  <target name="Cleanup">
+    <echo>Cleaning...</echo>
+
+    <!-- from the parent folder down delete everything else
+         this will insure, the previous zip file in sibling folders get removed -->
+    <delete>
+     <!-- <fileset basedir="${CDContentPath}">
+        <include name="\**"/>
+      </fileset>-->
+    </delete>
+  </target>
+
+</project>
