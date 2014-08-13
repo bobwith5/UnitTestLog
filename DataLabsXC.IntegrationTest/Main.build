@@ -19,15 +19,7 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
-  <script language="C#">
-
-    <references>
-      <include name="System.Xml.dll" />
-    </references>
-   
-
-  </script>
-  <target name="Main Build">
+   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
         <include name="**/AssemblyInfo.*"/>
