@@ -19,6 +19,23 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
+  <script language="C#">
+
+    <references>
+      <include name="System.Xml.dll" />
+    </references>
+    <code>
+      <![CDATA[
+			[Function("SimpleFunction")]
+			public static string SimpleFunction()
+			{
+				String buddhaSaying = "Say Hello";
+
+				return buddhaSaying;
+			}
+			]]>
+    </code>
+  </script>
    <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
@@ -96,7 +113,7 @@
         </otherwise>
 
       </choose>
-
+      <echo message='${SimpleFunction()}'/>
       <delete file="${UnitTestResultFilePath}" />
 
     </foreach>
