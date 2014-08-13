@@ -4,7 +4,7 @@
   <property name="UnitTestResultFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.trx"/>
   <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
   <property name="UnitTestResultLogFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.xml"/>
-
+  <property name="StandardIntegrationResultFolder" value="C:\UnitTestResults\IntegrationResults"/>
   <property name="UnitTestMode" value="" overwrite="false"/>
   <property name="cacheName" value="" />
   <property name="generateXCConfig" value="false" overwrite="false" />
@@ -41,11 +41,13 @@
       <include name="System.Xml.dll" />
       <include name="System.Text.dll" />
       <include name="System.IO.dll" />
+      <include name="System.Data.dll" />
     </references>
     <imports>
       <import namespace="System.Xml" />
       <import namespace="System.Text" />
       <import namespace="System.IO" />
+      <import namespace="System.Data" />
     </imports>
     <code>
       <![CDATA[
@@ -181,7 +183,10 @@
  
     </foreach>
   </target>
-
+  <target name="GenerateIntegrationTestPerformanceResults">
+    
+    
+  </target>
 
   <target name="Cleanup">
     <echo>Cleaning...</echo>
