@@ -38,33 +38,46 @@
 			[Function("GetResults")]
 			public static string GetResults(string source,string resultFileName )
         {
-           
-            XDocument xDoc = XDocument.Load(source);
-            XNamespace defaultNs = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
-            var UnitTestResultNode = (from data in xDoc.Descendants(defaultNs + "Results")
-                                      select data).Descendants(defaultNs + "UnitTestResult");
-            var recordSet = from src in UnitTestResultNode
-                            select new XElement("UnitTestResult",
-                                new XAttribute("TestRunID", src.Attribute("testId").Value),
-                                new XAttribute("TestName", src.Attribute("testName").Value),
-                                new XAttribute("TestOutcome", src.Attribute("outcome").Value),
-                                new XAttribute("Duration", src.Attribute("duration").Value)
-                            );
-            
-            XDocument xmlDocument;
-            XElement rootElement;
+            XmlDocument xDoc = new XmlDocument();
+            XmlDocument xmlDocument;
+            xDoc.Load(source);
+            XmlNode rootNode;
+            var mgr = new XmlNamespaceManager(xDoc.NameTable);
+            mgr.AddNamespace("", "http://schemas.microsoft.com/appx/2010/manifest");
+            XmlNode root = xDoc.DocumentElement;
+            var nodes = root.SelectNodes("//*[local-name()='TestRun']/*[local-name()='Results']/*[local-name()='TestResultAggregation']/*[local-name()='InnerResults']/*[local-name()='UnitTestResult']");
             if (!File.Exists(resultFileName))
             {
-                xmlDocument = new XDocument();
-                rootElement = new XElement("Results");
-                xmlDocument.Add(rootElement);
+                xmlDocument = new XmlDocument();
+                rootNode = xmlDocument.CreateNode(XmlNodeType.Element, "Results", null);
+                xmlDocument.AppendChild(rootNode);
             }
             else
             {
-                xmlDocument = XDocument.Load(resultFileName);
-                rootElement = xmlDocument.Element("Results");
+                xmlDocument = new XmlDocument();
+                xmlDocument.Load(resultFileName);
+                rootNode = xmlDocument.DocumentElement;
             }
-            rootElement.Add(recordSet);
+            foreach (XmlNode item in nodes)
+            {
+                XmlNode resultNode = xmlDocument.CreateNode(XmlNodeType.Element, "TestMethod", null);
+                XmlAttribute className = xmlDocument.CreateAttribute("TestName");
+               
+                className.Value = item.Attributes["testName"].Value;
+
+                XmlAttribute outcome = xmlDocument.CreateAttribute("outcome");
+               
+                outcome.Value = item.Attributes["outcome"].Value;
+                XmlAttribute duration = xmlDocument.CreateAttribute("duration");
+                
+                duration.Value = item.Attributes["duration"].Value;
+                resultNode.Attributes.Append(className);
+                resultNode.Attributes.Append(outcome);
+                resultNode.Attributes.Append(duration);
+                rootNode.AppendChild(resultNode);
+
+            }
+
             xmlDocument.Save(resultFileName);
             return "Logged SucessFully";
         }

@@ -2,8 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.IO;
-using System.Xml.Linq;
-using System.Linq;
+using System.Xml;
+//using System.Xml.Linq;
+//using System.Linq;
 
 
 namespace DataLabsXC.IntegrationTest
@@ -26,6 +27,52 @@ namespace DataLabsXC.IntegrationTest
             Assert.AreEqual("Class1 - MethodB", result);
            // GetResults();
 
+        }
+        public void GetResults()
+        {
+            string source = @"C:\Users\bommitc\Desktop\results.trx";
+            string resultFileName = @"C:\D\UnitTestLog\log.xml";
+            XmlDocument xDoc = new XmlDocument();
+            XmlDocument xmlDocument;
+            xDoc.Load(source);
+            XmlNode rootNode;
+            var mgr = new XmlNamespaceManager(xDoc.NameTable);
+            mgr.AddNamespace("", "http://schemas.microsoft.com/appx/2010/manifest");
+            XmlNode root = xDoc.DocumentElement;
+            var nodes = root.SelectNodes("//*[local-name()='TestRun']/*[local-name()='Results']/*[local-name()='TestResultAggregation']/*[local-name()='InnerResults']/*[local-name()='UnitTestResult']");
+            if (!File.Exists(resultFileName))
+            {
+                xmlDocument = new XmlDocument();
+                rootNode = xmlDocument.CreateNode(XmlNodeType.Element, "Results", null);
+                xmlDocument.AppendChild(rootNode);
+            }
+            else
+            {
+                xmlDocument = new XmlDocument();
+                xmlDocument.Load(resultFileName);
+                rootNode = xmlDocument.DocumentElement;
+            }
+            foreach (XmlNode item in nodes)
+            {
+                XmlNode resultNode = xmlDocument.CreateNode(XmlNodeType.Element, "TestMethod", null);
+                XmlAttribute className = xmlDocument.CreateAttribute("TestName");
+               
+                className.Value = item.Attributes["testName"].Value;
+
+                XmlAttribute outcome = xmlDocument.CreateAttribute("outcome");
+               
+                outcome.Value = item.Attributes["outcome"].Value;
+                XmlAttribute duration = xmlDocument.CreateAttribute("duration");
+                
+                duration.Value = item.Attributes["duration"].Value;
+                resultNode.Attributes.Append(className);
+                resultNode.Attributes.Append(outcome);
+                resultNode.Attributes.Append(duration);
+                rootNode.AppendChild(resultNode);
+
+            }
+
+            xmlDocument.Save(resultFileName);
         }
 
 
@@ -80,7 +127,7 @@ namespace DataLabsXC.IntegrationTest
         //                        new XAttribute("TestOutcome", src.Attribute("outcome").Value),
         //                        new XAttribute("Duration", src.Attribute("duration").Value)
         //                    );
-            
+
         //    XDocument xmlDocument;
         //    XElement rootElement;
         //    if (!File.Exists(resultFileName))
