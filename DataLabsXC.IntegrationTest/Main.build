@@ -3,9 +3,7 @@
   <include buildfile="CommonProperties.include" />
   <property name="UnitTestResultFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.trx"/>
   <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
-
-
-  <property name="UnitTestMode" value="" overwrite="false"/>
+  <property name="UnitTestResultLogFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.xml"/>
   <property name="cacheName" value="" />
   <property name="generateXCConfig" value="false" overwrite="false" />
 
@@ -22,20 +20,51 @@
   <script language="C#" prefix="MyMethods" >
     <references>
       <include name="System.Xml.dll" />
+      <include name="System.Text.dll" />
+      <include name="System.IO.dll" />
+      <include name="System.Xml.Linq.dll" />
+      <include name="using System.Linq.dll" />
     </references>
     <code>
       <![CDATA[
-			[Function("SimpleFunction")]
-			public static string SimpleFunction()
-			{
-				String buddhaSaying = "Say Hello";
-
-				return buddhaSaying;
-			}
+			[Function("GetResults")]
+			public static string GetResults()
+        {
+            string source = project.Properties["UnitTestResultFilePath"];
+            string resultFileName = project.Properties["UnitTestResultLogFilePath"];
+            XDocument xDoc = XDocument.Load(source);
+            XNamespace defaultNs = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
+            var UnitTestResultNode = (from data in xDoc.Descendants(defaultNs + "Results")
+                                      select data).Descendants(defaultNs + "UnitTestResult");
+            var recordSet = from src in UnitTestResultNode
+                            select new XElement("UnitTestResult",
+                                new XAttribute("TestRunID", src.Attribute("testId").Value),
+                                new XAttribute("TestName", src.Attribute("testName").Value),
+                                new XAttribute("TestOutcome", src.Attribute("outcome").Value),
+                                new XAttribute("Duration", src.Attribute("duration").Value)
+                            );
+            
+            XDocument xmlDocument;
+            XElement rootElement;
+            if (!File.Exists(resultFileName))
+            {
+                xmlDocument = new XDocument();
+                rootElement = new XElement("Results");
+                xmlDocument.Add(rootElement);
+            }
+            else
+            {
+                xmlDocument = XDocument.Load(resultFileName);
+                rootElement = xmlDocument.Element("Results");
+            }
+            rootElement.Add(recordSet);
+            xmlDocument.Save(resultFileName);
+            return "Logged SucessFully";
+        }
 			]]>
     </code>
   </script>
-   <target name="Main Build">
+  <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
         <include name="**/AssemblyInfo.*"/>
@@ -112,9 +141,8 @@
         </otherwise>
 
       </choose>
-      <echo message='${MyMethods::SimpleFunction()}'/>
+      <echo message='${MyMethods::GetResults()}'/>
       <delete file="${UnitTestResultFilePath}" />
-
     </foreach>
   </target>
 
