@@ -176,6 +176,7 @@
 
       </choose>
       <echo message='${MyMethods::SimpleFunction()}'/>
+      <echo message='${MyMethods::GetResults(UnitTestResultFilePath,UnitTestResultLogFilePath)}'/>
       <delete file="${UnitTestResultFilePath}" />
 
     </foreach>
