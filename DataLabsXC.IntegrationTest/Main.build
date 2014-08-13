@@ -26,13 +26,19 @@
       <include name="System.Xml.Linq.dll" />
       <include name="System.Linq.dll" />
     </references>
+    <imports>
+      <import namespace="System.Xml" />
+      <import namespace="System.Text" />
+      <import namespace="System.IO" />
+      <import namespace="System.Xml.Linq" />
+      <import namespace="System.Linq" />
+    </imports>
     <code>
       <![CDATA[
 			[Function("GetResults")]
-			public static string GetResults()
+			public static string GetResults(string source,string resultFileName )
         {
-            string source = project.Properties["UnitTestResultFilePath"];
-            string resultFileName = project.Properties["UnitTestResultLogFilePath"];
+           
             XDocument xDoc = XDocument.Load(source);
             XNamespace defaultNs = "http://microsoft.com/schemas/VisualStudio/TeamTest/2010";
             var UnitTestResultNode = (from data in xDoc.Descendants(defaultNs + "Results")
@@ -142,7 +148,7 @@
         </otherwise>
 
       </choose>
-      <echo message='${MyMethods::GetResults()}'/>
+      <echo message='${MyMethods::GetResults(UnitTestResultFilePath,UnitTestResultLogFilePath)}'/>
       <delete file="${UnitTestResultFilePath}" />
     </foreach>
   </target>
