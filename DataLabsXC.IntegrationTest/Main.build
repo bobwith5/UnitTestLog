@@ -19,8 +19,7 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
-  <script language="C#">
-
+  <script language="C#" prefix="MyMethods" >
     <references>
       <include name="System.Xml.dll" />
     </references>
@@ -113,7 +112,7 @@
         </otherwise>
 
       </choose>
-      <echo message='${SimpleFunction()}'/>
+      <echo message='${MyMethods::SimpleFunction()}'/>
       <delete file="${UnitTestResultFilePath}" />
 
     </foreach>
