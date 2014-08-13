@@ -19,11 +19,12 @@
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
   <script language="C#" prefix="MyMethods" >
     <references>
+      <include name="System.dll"/>
       <include name="System.Xml.dll" />
       <include name="System.Text.dll" />
       <include name="System.IO.dll" />
       <include name="System.Xml.Linq.dll" />
-      <include name="using System.Linq.dll" />
+      <include name="System.Linq.dll" />
     </references>
     <code>
       <![CDATA[
