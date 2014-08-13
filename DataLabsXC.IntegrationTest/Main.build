@@ -157,7 +157,7 @@
         </otherwise>
 
       </choose>
-      <echo message='${MyMethods::GetResults(UnitTestResultFilePath,UnitTestResultLogFilePath)}'/>
+      <!--<echo message='${MyMethods::GetResults(UnitTestResultFilePath,UnitTestResultLogFilePath)}'/>-->
       <delete file="${UnitTestResultFilePath}" />
     </foreach>
   </target>
