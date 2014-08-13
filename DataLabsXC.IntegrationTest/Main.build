@@ -23,15 +23,11 @@
       <include name="System.Xml.dll" />
       <include name="System.Text.dll" />
       <include name="System.IO.dll" />
-      <include name="System.Xml.Linq.dll" />
-      <include name="System.Linq.dll" />
     </references>
     <imports>
       <import namespace="System.Xml" />
       <import namespace="System.Text" />
       <import namespace="System.IO" />
-      <import namespace="System.Xml.Linq" />
-      <import namespace="System.Linq" />
     </imports>
     <code>
       <![CDATA[
