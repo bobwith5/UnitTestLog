@@ -71,6 +71,7 @@
     <None Include="OrderedTest2.orderedtest">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="TestSettingsx64.testsettings" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="testdefinition\TestDefinitionConfiguration.xml" />
