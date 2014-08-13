@@ -17,69 +17,7 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
-  <script language="C#" prefix="MyMethods" >
-    <references>
-      <include name="System.dll"/>
-      <include name="System.Xml.dll" />
-      <include name="System.Text.dll" />
-      <include name="System.IO.dll" />
-    </references>
-    <imports>
-      <import namespace="System.Xml" />
-      <import namespace="System.Text" />
-      <import namespace="System.IO" />
-    </imports>
-    <code>
-      <![CDATA[
-			[Function("GetResults")]
-			public static string GetResults(string source,string resultFileName )
-        {
-            XmlDocument xDoc = new XmlDocument();
-            XmlDocument xmlDocument;
-            xDoc.Load(source);
-            XmlNode rootNode;
-            var mgr = new XmlNamespaceManager(xDoc.NameTable);
-            mgr.AddNamespace("", "http://schemas.microsoft.com/appx/2010/manifest");
-            XmlNode root = xDoc.DocumentElement;
-            var nodes = root.SelectNodes("//*[local-name()='TestRun']/*[local-name()='Results']/*[local-name()='TestResultAggregation']/*[local-name()='InnerResults']/*[local-name()='UnitTestResult']");
-            if (!File.Exists(resultFileName))
-            {
-                xmlDocument = new XmlDocument();
-                rootNode = xmlDocument.CreateNode(XmlNodeType.Element, "Results", null);
-                xmlDocument.AppendChild(rootNode);
-            }
-            else
-            {
-                xmlDocument = new XmlDocument();
-                xmlDocument.Load(resultFileName);
-                rootNode = xmlDocument.DocumentElement;
-            }
-            foreach (XmlNode item in nodes)
-            {
-                XmlNode resultNode = xmlDocument.CreateNode(XmlNodeType.Element, "TestMethod", null);
-                XmlAttribute className = xmlDocument.CreateAttribute("TestName");
-               
-                className.Value = item.Attributes["testName"].Value;
-
-                XmlAttribute outcome = xmlDocument.CreateAttribute("outcome");
-               
-                outcome.Value = item.Attributes["outcome"].Value;
-                XmlAttribute duration = xmlDocument.CreateAttribute("duration");
-                
-                duration.Value = item.Attributes["duration"].Value;
-                resultNode.Attributes.Append(className);
-                resultNode.Attributes.Append(outcome);
-                resultNode.Attributes.Append(duration);
-                rootNode.AppendChild(resultNode);
-
-            }
-
-            xmlDocument.Save(resultFileName);
-            return "Logged SucessFully";
-        }
-			]]>
-    </code>
-  </script>
+  
   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
