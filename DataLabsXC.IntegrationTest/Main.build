@@ -3,6 +3,9 @@
   <include buildfile="CommonProperties.include" />
   <property name="UnitTestResultFilePath" value="C:\UnitTestResults\1.0.${NewBuildNumber}\results.trx"/>
   <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
+
+
+  <property name="UnitTestMode" value="" overwrite="false"/>
   <property name="cacheName" value="" />
   <property name="generateXCConfig" value="false" overwrite="false" />
 
@@ -16,7 +19,22 @@
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
-  
+  <script language="C#" prefix="MyMethods" >
+    <references>
+      <include name="System.Xml.dll" />
+    </references>
+    <code>
+      <![CDATA[
+			[Function("SimpleFunction")]
+			public static string SimpleFunction()
+			{
+				String buddhaSaying = "Say Hello";
+
+				return buddhaSaying;
+			}
+			]]>
+    </code>
+  </script>
   <target name="Main Build">
     <!--<setinformationalversion productname="${productName}" newbuildnumber="${NewBuildNumber}">
       <fileset basedir="${projectRootPath}\">
@@ -94,8 +112,9 @@
         </otherwise>
 
       </choose>
-      <!--<echo message='${MyMethods::GetResults(UnitTestResultFilePath,UnitTestResultLogFilePath)}'/>-->
+      <echo message='${MyMethods::SimpleFunction()}'/>
       <delete file="${UnitTestResultFilePath}" />
+
     </foreach>
   </target>
 
@@ -113,3 +132,4 @@
   </target>
 
 </project>
+
