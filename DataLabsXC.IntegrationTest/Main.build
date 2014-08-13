@@ -97,7 +97,7 @@
 
       </choose>
 
-      <!--<delete file="${UnitTestResultFilePath}" />-->
+      <delete file="${UnitTestResultFilePath}" />
 
     </foreach>
   </target>
