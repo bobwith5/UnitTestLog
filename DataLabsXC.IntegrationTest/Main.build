@@ -15,7 +15,7 @@
   <property name="IntegrationTestName" value="" overwrite="true" />
   <property name="IntegrationTestContainer" value="" overwrite="true" />
   <property name="IntegrationTestCategory" value="" overwrite="true" />
-  <property name="TestsToExecute" value="" overwrite="false" />
+  <property name="TestsToExecute" value="1,2" overwrite="false" />
   <property name="GenerateArtifacts" value="false" overwrite="true" />
 
   <property name="GenerateIntegrationTestDoc" value="false" overwrite="false" />
@@ -24,57 +24,7 @@
     <references>
       <include name="System.Xml.dll" />
     </references>
-    <code>
-      <![CDATA[
-		public static void ScriptMain(Project project)
-		{ 
-            var doc = new  System.Xml.XmlDocument();
-            doc.Load(project.Properties["projectRootPath"] + "\\" + project.Properties["TestDefinitionFilePath"]);
-
-            System.Xml.XmlNodeList testNodes = doc.SelectNodes("/TestDefinitionConfiguration/*");
-            if (testNodes == null)
-            {
-                throw new Exception("No TestDefinitionConfiguration node was found in the XML document.");
-            }
-
-			uint selections = Convert.ToUInt32(project.Properties["IntegrationTestsBitMask"]);
-            int index = 1;
-            int executeTestCount = 0;
-            bool isFirstRecord = true;
-            var testsToExecute = new StringBuilder();
-            foreach (System.Xml.XmlNode testNode in testNodes)
-            {
-                uint switchValue = Convert.ToUInt32(testNode.Attributes["Value"].InnerText);
-                if ((selections & switchValue) != 0)
-                {
-                    executeTestCount++;
-                    Console.WriteLine(testNode.Attributes["Name"].InnerText);
-                    if (isFirstRecord)
-                    {
-                        testsToExecute.Append(index);
-                    }
-                    else
-                    {
-                        testsToExecute.Append(String.Format(",{0}", index));
-                    }
-
-                    isFirstRecord = false;
-                }
-
-                index++;
-            }
-
-			if (testNodes.Count == executeTestCount)
-			{
-				project.Properties["GenerateArtifacts"] = "true";
-			}
-			
-			project.Properties["TestsToExecute"] = testsToExecute.ToString();
-		}
-
-
-      ]]>
-    </code>
+   
 
   </script>
   <target name="Main Build">
@@ -115,13 +65,13 @@
 
     <echo message="Executing ${TestsToExecute} ..." />
     <foreach item="String" in="${TestsToExecute}" delim="," property="count">
-      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="//TestDefinitionConfiguration/Test[${count}]/@Name" property="IntegrationTestName" />
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@Name" property="IntegrationTestName" />
       <echo message="${IntegrationTestName}" />
 
-      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/DataLabsXC.IntegrationTest/TestDefinitionConfiguration/Test[${count}]/@TestContainer" property="IntegrationTestContainer" />
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@TestContainer" property="IntegrationTestContainer" />
       <echo message="${IntegrationTestContainer}" />
 
-      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="/DataLabsXC.IntegrationTest/TestDefinitionConfiguration/Test[${count}]/@Category" property="IntegrationTestCategory" failonerror="false" verbose="true" />
+      <xmlpeek file="${projectRootPath}\${TestDefinitionFilePath}" xpath="BuildDefinition/TestDefinitionConfiguration/Test[${count}]/@Category" property="IntegrationTestCategory" failonerror="false" verbose="true" />
       <echo message="${IntegrationTestCategory}" />
 
       <echo message="Executing ${IntegrationTestContainer} ..." />
