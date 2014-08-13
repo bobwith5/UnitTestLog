@@ -72,7 +72,7 @@
         <when test="${string::get-length(IntegrationTestCategory) > 0}">
           <exec program="${msTestPath}">
             <arg value="/testcontainer:${projectRootPath}\${IntegrationTestContainer}" />
-            <arg value="/testsettings:${projectRootPath}\DataLabsXC.IntegrationTest\TestSettingsx64.testsettings " />
+            <arg value="/testsettings:${projectRootPath}\DataLabsXC.IntegrationTest\\DataLabsXC.IntegrationTest\TestSettingsx64.testsettings " />
             <arg value="/resultsfile:${UnitTestResultFilePath}" />
             <arg value="/category:${IntegrationTestCategory}" />
             <arg value="/detail:errormessage" />
@@ -85,7 +85,7 @@
         <otherwise>
           <exec program="${msTestPath}">
             <arg value="/testcontainer:${projectRootPath}\${IntegrationTestContainer}" />
-            <arg value="/testsettings:${projectRootPath}\DataLabsXC.IntegrationTest\TestSettingsx64.testsettings " />
+            <arg value="/testsettings:${projectRootPath}\DataLabsXC.IntegrationTest\\DataLabsXC.IntegrationTest\TestSettingsx64.testsettings " />
             <arg value="/resultsfile:${UnitTestResultFilePath}" />
             <arg value="/detail:errormessage" />
             <arg value="/detail:errorstacktrace" />
