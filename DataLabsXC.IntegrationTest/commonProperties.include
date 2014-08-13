@@ -37,7 +37,7 @@
   <property name="AssemblyReadOnly" value="false"/>
   <property name="ReadOnly" value="false"/>
 
-  <property name="devEnvPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.com"/>
+  <property name="devEnvPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe"/>
   <property name="tfPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\tf.exe"/>
   <property name="msTestPath" value="C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe"/>
   <property name="msBuildExePath" value="C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe"/>
