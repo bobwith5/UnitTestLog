@@ -187,7 +187,7 @@
     </setinformationalversion>-->
     <call target="CompileAll" />
     <!--<call target="QunitTest" />-->
-    <call target="Execute Integration Unit Test"/>
+    <call target="GenerateIntegrationTestPerformanceResults"/>
     <!--<call target="Cleanup" />-->
 
     <!--<call target="Copy Files" />
