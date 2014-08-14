@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.IO;
 using System.Xml;
+using System.Data;
 //using System.Xml.Linq;
 //using System.Linq;
 
@@ -25,7 +26,85 @@ namespace DataLabsXC.IntegrationTest
             Class1 class1 = new Class1();
             string result = class1.MethodB();
             Assert.AreEqual("Class1 - MethodB", result);
-           // GetResults();
+           // GenerateIntegrationResult();
+            // GetResults();
+
+        }
+        public void GenerateIntegrationResult(string standardResultPath, string recentResultFilePath)
+        {
+            //string standardResultPath = @"C:\UnitTestResults\IntegrationResults";
+            //string recentResultFilePath = @"C:\UnitTestResults\1.0.5.2.0.2014081343\results.xml";
+            if (!Directory.Exists(standardResultPath))
+                Directory.CreateDirectory(standardResultPath);
+            DirectoryInfo resultDirectory = new DirectoryInfo(standardResultPath);
+            bool isResultGenerated = false;
+            StringBuilder innerHtml = new StringBuilder();
+            string defaultStyle = "style='background-color: #FFFFFF;'";
+            string newTestStyle = "style='background-color: #00FF1E;'";
+            string increaseTimeStyle = "style='background-color: #A41E0F; color: #FFFFFF;'";
+            foreach (FileInfo file in resultDirectory.GetFiles("*.xml"))
+            {
+
+                if (!isResultGenerated && File.Exists(recentResultFilePath))
+                {
+                    XmlDocument sourceResult = new XmlDocument();
+                    sourceResult.Load(recentResultFilePath);
+                    XmlDocument destinationResult = new XmlDocument();
+                    destinationResult.Load(standardResultPath + "\\results.xml");
+                    foreach (XmlNode sourceNode in sourceResult.DocumentElement.SelectNodes("/Results/TestMethod"))
+                    {
+                        string testName = sourceNode.Attributes["TestName"].Value;
+                        string sourceDuration = sourceNode.Attributes["duration"].Value;
+                        string selectedStyle = string.Empty;
+                        TimeSpan souceTime = TimeSpan.Parse(sourceDuration);
+                        TimeSpan destinationTime;
+                        XmlNode destinationNode = destinationResult.DocumentElement.SelectSingleNode(string.Format("/Results/TestMethod[@TestName='{0}']", testName));
+                        string destinationDuration = string.Empty;
+                        if (destinationNode != null)
+                        {
+                            destinationDuration = destinationNode.Attributes["duration"].Value;
+                            destinationTime = TimeSpan.Parse(destinationDuration);
+                            if (souceTime == destinationTime)
+                                selectedStyle = defaultStyle;
+                            else
+                                selectedStyle = increaseTimeStyle;
+                        }
+                        else
+                        {
+                            selectedStyle = newTestStyle;
+                        }
+                        innerHtml.AppendFormat("<tr {0} ><td>{1}</td><td>{2}</td><td>{3}</td></tr>", selectedStyle, testName, destinationDuration, sourceDuration);
+                    }
+                    isResultGenerated = true;
+                }
+            }
+            if (isResultGenerated && innerHtml.Length > 0)
+            {
+                string tblHeader = "<table cellpadding='2' cellspacing='2' border='1' style='border-style: 2; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 12px;'>";
+                tblHeader += "<tr style='background-color: #11B1FF; font-weight: bold;'>";
+                tblHeader += "<td>Test Method Name</td>";
+                tblHeader += "<td>Previous Run Duration</td>";
+                tblHeader += "<td>Current Run Duration</td></tr>";
+                innerHtml.Insert(0, tblHeader);
+                innerHtml.Append("</table>");
+                foreach (FileInfo file in resultDirectory.GetFiles("*.xml"))
+                {
+                    file.Delete();
+                }
+                File.Move(recentResultFilePath, standardResultPath + "\\results.xml");
+                using (FileStream htmlStream = new FileStream(standardResultPath + "\\"+ DateTime.Now.ToFileTime() + ".htm", FileMode.Create))
+                {
+                    using (StreamWriter htmlWriter = new StreamWriter(htmlStream, Encoding.UTF8))
+                    {
+                        htmlWriter.WriteLine(innerHtml.ToString());
+                    }
+                }
+            }
+            else if (!isResultGenerated)
+            {
+                File.Move(recentResultFilePath, standardResultPath + "\\results.xml");
+            }
+
 
         }
         public void GetResults()
@@ -56,14 +135,14 @@ namespace DataLabsXC.IntegrationTest
             {
                 XmlNode resultNode = xmlDocument.CreateNode(XmlNodeType.Element, "TestMethod", null);
                 XmlAttribute className = xmlDocument.CreateAttribute("TestName");
-               
+
                 className.Value = item.Attributes["testName"].Value;
 
                 XmlAttribute outcome = xmlDocument.CreateAttribute("outcome");
-               
+
                 outcome.Value = item.Attributes["outcome"].Value;
                 XmlAttribute duration = xmlDocument.CreateAttribute("duration");
-                
+
                 duration.Value = item.Attributes["duration"].Value;
                 resultNode.Attributes.Append(className);
                 resultNode.Attributes.Append(outcome);
