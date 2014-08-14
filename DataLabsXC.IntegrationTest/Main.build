@@ -35,6 +35,7 @@
 			]]>
     </code>
   </script>
+  
   <script language="C#" prefix="MyMethods" >
     <references>
       <include name="System.dll"/>
@@ -187,6 +188,7 @@
     </setinformationalversion>-->
     <call target="CompileAll" />
     <!--<call target="QunitTest" />-->
+    <call target="Execute Integration Unit Test"/>
     <call target="GenerateIntegrationTestPerformanceResults"/>
     <!--<call target="Cleanup" />-->
 
